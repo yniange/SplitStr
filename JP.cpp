@@ -2,15 +2,15 @@
 
 std::vector<std::string> JP::SplitStr(std::string sourcestr, char sep)
 {
-	std::vector<std::string> resultarray;//ÓÃÀ´´æ´¢ËùÓĞ½âÎö³öÀ´µÄ×Ó×Ö·û´®
-	std::string strtmp;	//ÓÃÀ´½ÓÊÕ×Ó×Ö·û´®
+	std::vector<std::string> resultarray;//ç”¨æ¥å­˜å‚¨æ‰€æœ‰è§£æå‡ºæ¥çš„å­å­—ç¬¦ä¸²
+	std::string strtmp;	//ç”¨æ¥æ¥æ”¶å­å­—ç¬¦ä¸²
 
-	//PrevCÔÚ±éÀúÔ´×Ö·û´®Ê±¼ÇÂ¼ÏÂÀ´µ±Ç°×Ö·û£¬ÓÃÀ´Ê¶±ğÁ¬ĞøÁ½¸ö×Ö
-	//·û¶¼ÊÇ·Ö¸ô×Ö·ûµÄÇé¿ö
+	//PrevCåœ¨éå†æºå­—ç¬¦ä¸²æ—¶è®°å½•ä¸‹æ¥å½“å‰å­—ç¬¦ï¼Œç”¨æ¥è¯†åˆ«è¿ç»­ä¸¤ä¸ªå­—
+	//ç¬¦éƒ½æ˜¯åˆ†éš”å­—ç¬¦çš„æƒ…å†µ
 	char PrevC = '\0';
 	for (auto itc = sourcestr.begin(); itc < sourcestr.end(); ++itc)
-	{//itcµü´úÆ÷£¬ÒÀ´ÎÖ¸ÏòÔ´×Ö·û´®ÖĞµÄ×Ö·û
-		if (sep == (*itc))//Óöµ½·Ö¸ô×Ö·û
+	{//itcè¿­ä»£å™¨ï¼Œä¾æ¬¡æŒ‡å‘æºå­—ç¬¦ä¸²ä¸­çš„å­—ç¬¦
+		if (sep == (*itc))//é‡åˆ°åˆ†éš”å­—ç¬¦
 		{
 			if (itc == sourcestr.begin())
 			{
@@ -18,38 +18,37 @@ std::vector<std::string> JP::SplitStr(std::string sourcestr, char sep)
 			}
 			else
 			{
-				if (PrevC != sep)//Èç¹ûÇ°Ò»¸ö×Ö·û²»ÊÇ·Ö¸ô×Ö·û
-				{//Ôòµ±Ç°strtmp´æ´¢µÄÊÇÒ»¸öÓĞĞ§µÄ×Ö·û´®£¬½«ÆäÑ¹Èëresultarray
+				if (PrevC != sep)//å¦‚æœå‰ä¸€ä¸ªå­—ç¬¦ä¸æ˜¯åˆ†éš”å­—ç¬¦
+				{//åˆ™å½“å‰strtmpå­˜å‚¨çš„æ˜¯ä¸€ä¸ªæœ‰æ•ˆçš„å­—ç¬¦ä¸²ï¼Œå°†å…¶å‹å…¥resultarray
 					resultarray.push_back(strtmp);
 				}
 				else
-				{//Èç¹ûÇ°Ò»¸ö×Ö·ûÒ²ÊÇ·Ö¸ô×Ö·û£¬ÔòÓ¦¸ÃÍùresultarrayÑ¹ÈëÓÉÒ»¸ö¿Õ
-				 //¸ñ¹¹³ÉµÄ×Ö·û´®
+				{//å¦‚æœå‰ä¸€ä¸ªå­—ç¬¦ä¹Ÿæ˜¯åˆ†éš”å­—ç¬¦ï¼Œåˆ™åº”è¯¥å¾€resultarrayå‹å…¥ç”±ä¸€ä¸ªç©º
+				 //æ ¼æ„æˆçš„å­—ç¬¦ä¸²
 					resultarray.push_back(" ");
 				}
 			}
-			strtmp.clear();	//½«strtmpÇå¿Õ£¬×¼±¸½ÓÊÕÏÂÒ»¸ö×Ó´®µÄ×Ö·û
+			strtmp.clear();	//å°†strtmpæ¸…ç©ºï¼Œå‡†å¤‡æ¥æ”¶ä¸‹ä¸€ä¸ªå­ä¸²çš„å­—ç¬¦
 		}
 		else
-		{//µ±Ç°×Ö·û²»ÊÇ·Ö¸ô×Ö·û£¬Ôò½«ÆäÑ¹ÈëstrtmpÖĞ
+		{//å½“å‰å­—ç¬¦ä¸æ˜¯åˆ†éš”å­—ç¬¦ï¼Œåˆ™å°†å…¶å‹å…¥strtmpä¸­
 			strtmp.push_back(*itc);
 		}
-		PrevC = (*itc);//¼ÇÂ¼ÏÂµ±Ç°×Ö·û
+		PrevC = (*itc);//è®°å½•ä¸‹å½“å‰å­—ç¬¦
 	}
-	if (strtmp.empty())//forÑ­»·½áÊøºó£¬Èç¹ûstrtmpÖĞÃ»ÓĞ×Ö·û£¬ÔòÒâÎ¶×Å
-	{//Ô´×Ö·û´®ÊÇÒÔ·Ö¸ô×Ö·û´®½áÎ²µÄ£¨²»¼Æ¿Õ×Ö·û£©,´ËÊ±½«strtmpÖÃÎª¿Õ¸ñ
-	 //×Ö·û´®£¬¼´ÔÚ×îºóÌí¼ÓÒ»¸öÖ»ÓĞÒ»¸ö¿Õ¸ñ¹¹³ÉµÄ×Ö·û´®¡£
+	if (strtmp.empty())//forå¾ªç¯ç»“æŸåï¼Œå¦‚æœstrtmpä¸­æ²¡æœ‰å­—ç¬¦ï¼Œåˆ™æ„å‘³ç€
+	{//æºå­—ç¬¦ä¸²æ˜¯ä»¥åˆ†éš”å­—ç¬¦ä¸²ç»“å°¾çš„ï¼ˆä¸è®¡ç©ºå­—ç¬¦ï¼‰,æ­¤æ—¶å°†strtmpç½®ä¸ºç©ºæ ¼
+	 //å­—ç¬¦ä¸²ï¼Œå³åœ¨æœ€åæ·»åŠ ä¸€ä¸ªåªæœ‰ä¸€ä¸ªç©ºæ ¼æ„æˆçš„å­—ç¬¦ä¸²ã€‚
 		strtmp = " ";
 	}
-	resultarray.push_back(strtmp);	//½«×îºóÒ»¸ö·Ö¸ô×Ö·ûºóµÄ×Ó´®Ñ¹Èëresultarray
+	resultarray.push_back(strtmp);	//å°†æœ€åä¸€ä¸ªåˆ†éš”å­—ç¬¦åçš„å­ä¸²å‹å…¥resultarray
 
-	return resultarray;//½«´æ´¢ÁËËùÓĞ×Ó´®µÄresultarray·µ»Ø
+	return resultarray;//å°†å­˜å‚¨äº†æ‰€æœ‰å­ä¸²çš„resultarrayè¿”å›
 }
 
-//ÏÂ±ê°æ±¾
 std::vector<std::string> JP::SplitString(std::string SourceStr, char sep)
 {
-	std::vector<std::string> ResultArray;//ÓÃÀ´´æ´¢ËùÓĞ½âÎö³öÀ´µÄ×Ó×Ö·û´®
+	std::vector<std::string> ResultArray;//ç”¨æ¥å­˜å‚¨æ‰€æœ‰è§£æå‡ºæ¥çš„å­å­—ç¬¦ä¸²
 	int len = static_cast<int>(SourceStr.size());
 	std::string strtmp = "";
 	char PrevC = '\0';
@@ -81,12 +80,12 @@ std::vector<std::string> JP::SplitString(std::string SourceStr, char sep)
 		PrevC = SourceStr[i];
 	}
 
-	if (strtmp.empty())//forÑ­»·½áÊøºó£¬Èç¹ûstrtmpÖĞÃ»ÓĞ×Ö·û£¬ÔòÒâÎ¶×Å
-	{//Ô´×Ö·û´®ÊÇÒÔ·Ö¸ô×Ö·û´®½áÎ²µÄ£¨²»¼Æ¿Õ×Ö·û£©,´ËÊ±½«strtmpÖÃÎª¿Õ¸ñ
-	 //×Ö·û´®£¬¼´ÔÚ×îºóÌí¼ÓÒ»¸öÖ»ÓĞÒ»¸ö¿Õ¸ñ¹¹³ÉµÄ×Ö·û´®¡£
+	if (strtmp.empty())//forå¾ªç¯ç»“æŸåï¼Œå¦‚æœstrtmpä¸­æ²¡æœ‰å­—ç¬¦ï¼Œåˆ™æ„å‘³ç€
+	{//æºå­—ç¬¦ä¸²æ˜¯ä»¥åˆ†éš”å­—ç¬¦ä¸²ç»“å°¾çš„ï¼ˆä¸è®¡ç©ºå­—ç¬¦ï¼‰,æ­¤æ—¶å°†strtmpç½®ä¸ºç©ºæ ¼
+	 //å­—ç¬¦ä¸²ï¼Œå³åœ¨æœ€åæ·»åŠ ä¸€ä¸ªåªæœ‰ä¸€ä¸ªç©ºæ ¼æ„æˆçš„å­—ç¬¦ä¸²ã€‚
 		strtmp = " ";
 	}
-	ResultArray.push_back(strtmp);	//½«×îºóÒ»¸ö·Ö¸ô×Ö·ûºóµÄ×Ó´®Ñ¹ÈëResultArray
+	ResultArray.push_back(strtmp);	//å°†æœ€åä¸€ä¸ªåˆ†éš”å­—ç¬¦åçš„å­ä¸²å‹å…¥ResultArray
 
-	return ResultArray;//½«´æ´¢ÁËËùÓĞ×Ó´®µÄResultArray·µ»Ø
+	return ResultArray;//å°†å­˜å‚¨äº†æ‰€æœ‰å­ä¸²çš„ResultArrayè¿”å›
 }
