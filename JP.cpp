@@ -1,6 +1,8 @@
 #include "JP.h"
+#include <sstream>
 
-std::vector<std::string> JP::SplitStr(std::string sourcestr, char sep)
+//迭代器版本
+std::vector<std::string> JP::SplitStr(std::string strSource, char cDelim)
 {
 	std::vector<std::string> resultarray;//用来存储所有解析出来的子字符串
 	std::string strtmp;	//用来接收子字符串
@@ -8,17 +10,17 @@ std::vector<std::string> JP::SplitStr(std::string sourcestr, char sep)
 	//PrevC在遍历源字符串时记录下来当前字符，用来识别连续两个字
 	//符都是分隔字符的情况
 	char PrevC = '\0';
-	for (auto itc = sourcestr.begin(); itc < sourcestr.end(); ++itc)
+	for (auto itc = strSource.begin(); itc < strSource.end(); ++itc)
 	{//itc迭代器，依次指向源字符串中的字符
-		if (sep == (*itc))//遇到分隔字符
+		if (cDelim == (*itc))//遇到分隔字符
 		{
-			if (itc == sourcestr.begin())
+			if (itc == strSource.begin())
 			{
 				resultarray.push_back(" ");
 			}
 			else
 			{
-				if (PrevC != sep)//如果前一个字符不是分隔字符
+				if (PrevC != cDelim)//如果前一个字符不是分隔字符
 				{//则当前strtmp存储的是一个有效的字符串，将其压入resultarray
 					resultarray.push_back(strtmp);
 				}
@@ -46,15 +48,16 @@ std::vector<std::string> JP::SplitStr(std::string sourcestr, char sep)
 	return resultarray;//将存储了所有子串的resultarray返回
 }
 
-std::vector<std::string> JP::SplitString(std::string SourceStr, char sep)
+//下标版本
+std::vector<std::string> JP::SplitStrIndex(std::string strSource, char cDelim)
 {
 	std::vector<std::string> ResultArray;//用来存储所有解析出来的子字符串
-	int len = static_cast<int>(SourceStr.size());
+	int len = static_cast<int>(strSource.size());
 	std::string strtmp = "";
 	char PrevC = '\0';
 	for (int i = 0; i < len; ++i)
 	{
-		if (SourceStr[i] == sep)
+		if (strSource[i] == cDelim)
 		{
 			if (0 == i)
 			{
@@ -62,7 +65,7 @@ std::vector<std::string> JP::SplitString(std::string SourceStr, char sep)
 			}
 			else
 			{
-				if (PrevC != sep)
+				if (PrevC != cDelim)
 				{
 					ResultArray.push_back(strtmp);
 				}
@@ -75,9 +78,9 @@ std::vector<std::string> JP::SplitString(std::string SourceStr, char sep)
 		}
 		else
 		{
-			strtmp.push_back(SourceStr[i]);
+			strtmp.push_back(strSource[i]);
 		}
-		PrevC = SourceStr[i];
+		PrevC = strSource[i];
 	}
 
 	if (strtmp.empty())//for循环结束后，如果strtmp中没有字符，则意味着
@@ -88,4 +91,22 @@ std::vector<std::string> JP::SplitString(std::string SourceStr, char sep)
 	ResultArray.push_back(strtmp);	//将最后一个分隔字符后的子串压入ResultArray
 
 	return ResultArray;//将存储了所有子串的ResultArray返回
+}
+
+//sstream版本
+std::vector<std::string> JP::SplitString(std::string strSource, char cDelim)
+{
+	std::vector<std::string> vSegment;
+	std::stringstream ssStr(strSource);
+	std::string str;
+	char aSegment[LineMaxLen];
+	while (ssStr.getline(aSegment, LineMaxLen, cDelim))
+	{
+		str = aSegment;
+		vSegment.push_back(str);
+	}
+	if (*(strSource.end() - 1) == cDelim)
+		vSegment.push_back("");
+
+	return vSegment;
 }
